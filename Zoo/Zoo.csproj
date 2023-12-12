@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Alt_Alimento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alt_Alimento.Designer.cs">
+      <DependentUpon>Alt_Alimento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Alt_Animais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Alt_Animais.Designer.cs">
+      <DependentUpon>Alt_Animais.cs</DependentUpon>
+    </Compile>
     <Compile Include="Cad_Alimento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -72,6 +84,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Alt_Alimento.resx">
+      <DependentUpon>Alt_Alimento.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cad_Alimento.resx">
       <DependentUpon>Cad_Alimento.cs</DependentUpon>
     </EmbeddedResource>

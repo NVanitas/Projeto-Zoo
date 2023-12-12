@@ -36,7 +36,6 @@ namespace Zoo
         {
 
         }
-
         private void txt_pass_TextChanged(object sender, EventArgs e)
         {
 
@@ -62,8 +61,9 @@ namespace Zoo
                 {
 
                     Menu menu = new Menu();
-                    this.Hide();
                     menu.Show();
+                    this.Hide();
+                   
                 }
 
                 else

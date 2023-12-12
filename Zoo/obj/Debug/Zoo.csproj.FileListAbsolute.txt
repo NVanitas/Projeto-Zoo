@@ -11,3 +11,17 @@ C:\Users\NICOL\OneDrive\Área de Trabalho\Zoo\obj\Debug\Zoo.pdb
 C:\Users\NICOL\OneDrive\Área de Trabalho\Zoo\obj\Debug\Zoo.Cad_Alimento.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Zoo\obj\Debug\Zoo.Menu.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Zoo\obj\Debug\Zoo.Cad_Animais.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\bin\Debug\Zoo.exe.config
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\bin\Debug\Zoo.exe
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\bin\Debug\Zoo.pdb
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.csproj.AssemblyReference.cache
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Cad_Alimento.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Cad_Animais.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Form1.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Menu.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Properties.Resources.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.csproj.GenerateResource.cache
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.csproj.CoreCompileInputs.cache
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.exe
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.pdb
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Alt_Alimento.resources
