@@ -66,14 +66,14 @@
             // animaisToolStripMenuItem
             // 
             this.animaisToolStripMenuItem.Name = "animaisToolStripMenuItem";
-            this.animaisToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.animaisToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.animaisToolStripMenuItem.Text = "Animais";
             this.animaisToolStripMenuItem.Click += new System.EventHandler(this.animaisToolStripMenuItem_Click);
             // 
             // alimentosToolStripMenuItem
             // 
             this.alimentosToolStripMenuItem.Name = "alimentosToolStripMenuItem";
-            this.alimentosToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.alimentosToolStripMenuItem.Size = new System.Drawing.Size(159, 26);
             this.alimentosToolStripMenuItem.Text = "Alimentos";
             this.alimentosToolStripMenuItem.Click += new System.EventHandler(this.alimentosToolStripMenuItem_Click);
             // 
@@ -91,6 +91,7 @@
             this.animaisToolStripMenuItem1.Name = "animaisToolStripMenuItem1";
             this.animaisToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
             this.animaisToolStripMenuItem1.Text = "Animais";
+            this.animaisToolStripMenuItem1.Click += new System.EventHandler(this.animaisToolStripMenuItem1_Click);
             // 
             // alimentosToolStripMenuItem1
             // 

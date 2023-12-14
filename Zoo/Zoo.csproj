@@ -87,6 +87,9 @@
     <EmbeddedResource Include="Alt_Alimento.resx">
       <DependentUpon>Alt_Alimento.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Alt_Animais.resx">
+      <DependentUpon>Alt_Animais.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Cad_Alimento.resx">
       <DependentUpon>Cad_Alimento.cs</DependentUpon>
     </EmbeddedResource>

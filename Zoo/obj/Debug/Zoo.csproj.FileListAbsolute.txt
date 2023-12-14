@@ -25,3 +25,4 @@ C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.exe
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.pdb
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Alt_Alimento.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Alt_Animais.resources
