@@ -70,6 +70,18 @@
     <Compile Include="Cad_Animais.Designer.cs">
       <DependentUpon>Cad_Animais.cs</DependentUpon>
     </Compile>
+    <Compile Include="Ex_Alimento.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ex_Alimento.Designer.cs">
+      <DependentUpon>Ex_Alimento.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Ex_Animais.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Ex_Animais.Designer.cs">
+      <DependentUpon>Ex_Animais.cs</DependentUpon>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -95,6 +107,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Cad_Animais.resx">
       <DependentUpon>Cad_Animais.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Ex_Alimento.resx">
+      <DependentUpon>Ex_Alimento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>

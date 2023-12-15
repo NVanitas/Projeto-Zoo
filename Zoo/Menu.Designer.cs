@@ -89,14 +89,14 @@
             // animaisToolStripMenuItem1
             // 
             this.animaisToolStripMenuItem1.Name = "animaisToolStripMenuItem1";
-            this.animaisToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.animaisToolStripMenuItem1.Size = new System.Drawing.Size(159, 26);
             this.animaisToolStripMenuItem1.Text = "Animais";
             this.animaisToolStripMenuItem1.Click += new System.EventHandler(this.animaisToolStripMenuItem1_Click);
             // 
             // alimentosToolStripMenuItem1
             // 
             this.alimentosToolStripMenuItem1.Name = "alimentosToolStripMenuItem1";
-            this.alimentosToolStripMenuItem1.Size = new System.Drawing.Size(224, 26);
+            this.alimentosToolStripMenuItem1.Size = new System.Drawing.Size(159, 26);
             this.alimentosToolStripMenuItem1.Text = "Alimentos";
             this.alimentosToolStripMenuItem1.Click += new System.EventHandler(this.alimentosToolStripMenuItem1_Click);
             // 
@@ -112,14 +112,16 @@
             // animaisToolStripMenuItem2
             // 
             this.animaisToolStripMenuItem2.Name = "animaisToolStripMenuItem2";
-            this.animaisToolStripMenuItem2.Size = new System.Drawing.Size(159, 26);
+            this.animaisToolStripMenuItem2.Size = new System.Drawing.Size(224, 26);
             this.animaisToolStripMenuItem2.Text = "Animais ";
+            this.animaisToolStripMenuItem2.Click += new System.EventHandler(this.animaisToolStripMenuItem2_Click);
             // 
             // alimentosToolStripMenuItem2
             // 
             this.alimentosToolStripMenuItem2.Name = "alimentosToolStripMenuItem2";
-            this.alimentosToolStripMenuItem2.Size = new System.Drawing.Size(159, 26);
+            this.alimentosToolStripMenuItem2.Size = new System.Drawing.Size(224, 26);
             this.alimentosToolStripMenuItem2.Text = "Alimentos";
+            this.alimentosToolStripMenuItem2.Click += new System.EventHandler(this.alimentosToolStripMenuItem2_Click);
             // 
             // Menu
             // 

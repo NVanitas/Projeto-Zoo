@@ -1,11 +1,4 @@
-
-
-
-
-/*Script do banco de dados zoologico
-
-Para a ATIVIDADE de ILP20
-*/
+User
 Use master
 go
 if exists (select* from sysdatabases where name='Zoologico')
@@ -77,4 +70,3 @@ Insert into Animais Values
 select * from Alimentos
 Select * from Animais
 Select * from Animais as ani INNER JOIN Alimentos as Ali On ani.codalimento = Ali.codalimento 
-

@@ -51,5 +51,18 @@ namespace Zoo
             Alt_Animais alt_animais = new Alt_Animais();
             alt_animais.Show();
         }
+
+        private void animaisToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Ex_Animais ex_animais = new Ex_Animais();
+            ex_animais.Show();
+        }
+
+        private void alimentosToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            Ex_Alimento ex_alimento = new Ex_Alimento();
+            ex_alimento.Show();
+           
+        }
     }
 }

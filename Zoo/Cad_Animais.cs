@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -22,6 +16,13 @@ namespace Zoo
         public Cad_Animais()
         {
             InitializeComponent();
+            InitializeDatabaseConnection();
+        }
+
+        private void InitializeDatabaseConnection()
+        {
+            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            conexao = new SqlConnection(strconex);
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
@@ -31,56 +32,74 @@ namespace Zoo
 
         private void cb_tipo_SelectedIndexChanged(object sender, EventArgs e)
         {
-         
+
         }
 
         private void Cad_Animais_Load(object sender, EventArgs e)
         {
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-            conexao = new SqlConnection(strconex);
-            conexao.Open();
+            try
+            {
+                conexao.Open();
 
-            tblalimentos = new DataTable();
+                tblalimentos = new DataTable();
 
-            strsql = "select * from alimentos";
-            adapter = new SqlDataAdapter(strsql, conexao);
-            adapter.Fill(tblalimentos);
+                strsql = "select * from alimentos";
+                adapter = new SqlDataAdapter(strsql, conexao);
+                adapter.Fill(tblalimentos);
 
-            cb_tipo.DataSource = tblalimentos;
-            cb_tipo.DisplayMember = "Alimento";
-            cb_tipo.ValueMember = "codalimento";
-   
-
+                cb_tipo.DataSource = tblalimentos;
+                cb_tipo.DisplayMember = "Alimento";
+                cb_tipo.ValueMember = "codalimento";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados. " + ex.Message,
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+            }
+            finally
+            {
+                conexao.Close();
+            }
         }
 
         private void btn_cadastrar_Click(object sender, EventArgs e)
         {
-
             try
             {
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-                conexao = new SqlConnection(strconex);
                 conexao.Open();
 
+                strsql = "insert into Animais (Animal,Nome,PaisOrigem,AnoNasc,Genero,QuantGramas,CodAlimento) " +
+                         "values (@Animal, @Nome, @PaisOrigem, @AnoNasc, @Genero, @QuantGramas, @CodAlimento)";
 
-                strsql = "insert into Animais (Animal,Nome,PaisOrigem,AnoNasc,Genero,QuantGramas,CodAlimento) values ('" + txt_animal.Text + "','" + txt_nome.Text + "','" + txt_origem.Text + "','" + txt_nasc.Text + "','" + txt_genero.Text + "','" + txt_gramas.Text + "','" + cb_tipo.SelectedValue + "')";
                 comando = new SqlCommand(strsql, conexao);
+                comando.Parameters.AddWithValue("@Animal", txt_animal.Text);
+                comando.Parameters.AddWithValue("@Nome", txt_nome.Text);
+                comando.Parameters.AddWithValue("@PaisOrigem", txt_origem.Text);
+                comando.Parameters.AddWithValue("@AnoNasc", txt_nasc.Text);
+                comando.Parameters.AddWithValue("@Genero", txt_genero.Text);
+                comando.Parameters.AddWithValue("@QuantGramas", txt_gramas.Text);
+                comando.Parameters.AddWithValue("@CodAlimento", cb_tipo.SelectedValue);
+
                 comando.ExecuteNonQuery();
 
                 MessageBox.Show("Animal Cadastrado!!! ",
-                                    "Atenção!",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Exclamation);
-
+                                "Atenção!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro nos dados digitados. " + ex.Message,
-                                    "Aviso",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Exclamation);
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             }
-
+            finally
+            {
+                conexao.Close();
+            }
         }
     }
 }

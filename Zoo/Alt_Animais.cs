@@ -1,12 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -15,11 +9,9 @@ namespace Zoo
     {
         private SqlConnection conexao;
         private SqlDataAdapter adapter;
-        private SqlCommand comando;
         private DataTable tblanimais;
         private DataTable tblalimentos;
         private string strsql, strconex;
-
 
         public Alt_Animais()
         {
@@ -28,46 +20,62 @@ namespace Zoo
 
         private void btn_procurar_Click(object sender, EventArgs e)
         {
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-            conexao = new SqlConnection(strconex);
-            conexao.Open();
-
-            tblanimais = new DataTable();
-
-            strsql = "select * from animais where codanimal='" + txt_cod.Text + "'";
-            adapter = new SqlDataAdapter(strsql, conexao);
-            adapter.Fill(tblanimais);
-
-            if (tblanimais.Rows.Count == 1)
+            try
             {
-                txt_animal.Text = tblanimais.Rows[0]["Animal"].ToString();
-                txt_nome.Text = tblanimais.Rows[0]["Nome"].ToString();
-                txt_origem.Text = tblanimais.Rows[0]["PaisOrigem"].ToString();
-                txt_nasc.Text = tblanimais.Rows[0]["AnoNasc"].ToString();
-                txt_genero.Text = tblanimais.Rows[0]["Genero"].ToString();
-                txt_gramas.Text = tblanimais.Rows[0]["quantgramas"].ToString();             
+                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
+                using (conexao = new SqlConnection(strconex))
+                {
+                    conexao.Open();
 
-                gb_1.Enabled = false;
-                gb_2.Visible = true;
+                    tblanimais = new DataTable();
+                    strsql = "select * from animais where codanimal=@codanimal";
+                    using (adapter = new SqlDataAdapter(strsql, conexao))
+                    {
+                        adapter.SelectCommand.Parameters.AddWithValue("@codanimal", txt_cod.Text);
+                        adapter.Fill(tblanimais);
+                    }
+
+                    if (tblanimais.Rows.Count == 1)
+                    {
+                        DataRow row = tblanimais.Rows[0];
+
+                        txt_animal.Text = row["Animal"].ToString();
+                        txt_nome.Text = row["Nome"].ToString();
+                        txt_origem.Text = row["PaisOrigem"].ToString();
+                        txt_nasc.Text = row["AnoNasc"].ToString();
+                        txt_genero.Text = row["Genero"].ToString();
+                        txt_gramas.Text = row["quantgramas"].ToString();
+
+                        if (row["codalimento"] != DBNull.Value)
+                        {
+                            cb_tipo.SelectedValue = row["codalimento"];
+                        }
+                        else
+                        {
+                            cb_tipo.SelectedIndex = -1;
+                        }
+
+                        gb_1.Enabled = false;
+                        gb_2.Visible = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Registro não foi encontrado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        txt_cod.Text = null;
+                        gb_1.Enabled = true;
+                        gb_2.Visible = false;
+                    }
+                }
             }
-            else
+            catch (Exception ex)
             {
-
-                MessageBox.Show("Registro não foi encontrado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                txt_cod.Text = null;
-                gb_1.Enabled = true;
-                gb_2.Visible = false;
+                MessageBox.Show("Erro na pesquisa." + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
-
-
-
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
-            gb_1.Enabled = true;
-            gb_2.Visible = false;
+            LimparCampos();
         }
 
         private void btn_retornar_Click(object sender, EventArgs e)
@@ -79,43 +87,84 @@ namespace Zoo
         {
             try
             {
+                strsql = "update animais set animal=@animal, nome=@nome, paisorigem=@paisorigem, anonasc=@anonasc, genero=@genero, quantgramas=@quantgramas, codalimento=@codalimento where codanimal=@codanimal";
+                using (conexao = new SqlConnection(strconex))
+                using (SqlCommand comando = new SqlCommand(strsql, conexao))
+                {
+                    conexao.Open();
+                    comando.Parameters.AddWithValue("@codanimal", txt_cod.Text);
+                    comando.Parameters.AddWithValue("@animal", txt_animal.Text);
+                    comando.Parameters.AddWithValue("@nome", txt_nome.Text);
+                    comando.Parameters.AddWithValue("@paisorigem", txt_origem.Text);
+                    comando.Parameters.AddWithValue("@anonasc", txt_nasc.Text);
+                    comando.Parameters.AddWithValue("@genero", txt_genero.Text);
+                    comando.Parameters.AddWithValue("@quantgramas", txt_gramas.Text);
+                    comando.Parameters.AddWithValue("@codalimento", cb_tipo.SelectedValue);
 
-                strsql = "update animais set animal='" + txt_animal.Text + "',nome='" + txt_nome.Text + "',paisorigem='" + txt_origem.Text + "',anonasc='" + txt_nasc.Text + "',genero='" + txt_genero.Text + "',quantgramas='" + txt_gramas.Text + "', codalimento='" + cb_tipo.SelectedIndex + "' where codanimal ='" + txt_cod.Text + "'";
-                comando = new SqlCommand(strsql, conexao);
-                comando.ExecuteNonQuery();
-
+                    comando.ExecuteNonQuery();
+                }
             }
-
             catch (Exception ex)
             {
-                MessageBox.Show("Erro nos dados digitados." + ex.Message, "aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro nos dados digitados." + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            finally
+            {
+                LimparCampos();
+            }
+        }
 
-            txt_cod.Text = null;
+        private void Alt_Animais_Load(object sender, EventArgs e)
+        {
+            CarregarAlimentos();
+            HabilitarControles();
+        }
+
+        private void CarregarAlimentos()
+        {
+            try
+            {
+                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
+                using (conexao = new SqlConnection(strconex))
+                {
+                    conexao.Open();
+
+                    tblalimentos = new DataTable();
+                    strsql = "select * from alimentos";
+                    using (adapter = new SqlDataAdapter(strsql, conexao))
+                    {
+                        adapter.Fill(tblalimentos);
+                    }
+
+                    cb_tipo.DataSource = tblalimentos;
+                    cb_tipo.DisplayMember = "Alimento";
+                    cb_tipo.ValueMember = "codalimento";
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erro ao carregar dados." + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void HabilitarControles()
+        {
             gb_1.Enabled = true;
             gb_2.Visible = false;
         }
 
-    
-
-    private void Alt_Animais_Load(object sender, EventArgs e)
+        private void LimparCampos()
         {
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-            conexao = new SqlConnection(strconex);
-            conexao.Open();
+            txt_cod.Text = null;
+            txt_animal.Text = null;
+            txt_nome.Text = null;
+            txt_origem.Text = null;
+            txt_nasc.Text = null;
+            txt_genero.Text = null;
+            txt_gramas.Text = null;
+            cb_tipo.SelectedIndex = -1;
 
-            tblalimentos = new DataTable();
-
-            strsql = "select * from alimentos";
-            adapter = new SqlDataAdapter(strsql, conexao);
-            adapter.Fill(tblalimentos);
-
-            cb_tipo.DataSource = tblalimentos;
-            cb_tipo.DisplayMember = "Alimento";
-            cb_tipo.ValueMember = "codalimento";
-
-            gb_1.Enabled = true;
-            gb_2.Visible = false;
+            HabilitarControles();
         }
     }
 }
