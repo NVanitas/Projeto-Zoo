@@ -127,7 +127,6 @@
             this.ForeColor = System.Drawing.Color.Black;
             this.Name = "Cad_Alimento";
             this.Text = "Cadastro de Alimentos";
-            this.Load += new System.EventHandler(this.Cad_Alimento_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -21,6 +21,7 @@ namespace Zoo
 
         private void InitializeDatabaseConnection()
         {
+            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
             strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
             conexao = new SqlConnection(strconex);
         }
@@ -29,20 +30,18 @@ namespace Zoo
         {
             this.Close();
         }
-
-        private void cb_tipo_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
-
+   
+     
         private void Cad_Animais_Load(object sender, EventArgs e)
         {
             try
             {
+                //inicia a conexão com o banco de dados ms sql server
                 conexao.Open();
 
                 tblalimentos = new DataTable();
 
+                //comando para receber os dados de alimentos no sql
                 strsql = "select * from alimentos";
                 adapter = new SqlDataAdapter(strsql, conexao);
                 adapter.Fill(tblalimentos);
@@ -60,6 +59,7 @@ namespace Zoo
             }
             finally
             {
+                //finaliza a conexão
                 conexao.Close();
             }
         }
@@ -68,8 +68,11 @@ namespace Zoo
         {
             try
             {
+                //inicia a conexão com o banco de dados ms sql server
+
                 conexao.Open();
 
+                //o comando de inserir dados que será executado no sql
                 strsql = "insert into Animais (Animal,Nome,PaisOrigem,AnoNasc,Genero,QuantGramas,CodAlimento) " +
                          "values (@Animal, @Nome, @PaisOrigem, @AnoNasc, @Genero, @QuantGramas, @CodAlimento)";
 
@@ -98,6 +101,7 @@ namespace Zoo
             }
             finally
             {
+                //finaliza a conexão
                 conexao.Close();
             }
         }

@@ -53,7 +53,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Seja-Bem Vindo!";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label1.Click += new System.EventHandler(this.Label1_Click);
             // 
             // label2
             // 
@@ -66,7 +65,6 @@
             this.label2.TabIndex = 1;
             this.label2.Text = "Ao Sistema de alimentação do Zoológico";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.label2.Click += new System.EventHandler(this.Label2_Click);
             // 
             // label3
             // 
@@ -106,7 +104,6 @@
             this.txt_pass.Size = new System.Drawing.Size(263, 23);
             this.txt_pass.TabIndex = 5;
             this.txt_pass.UseSystemPasswordChar = true;
-            this.txt_pass.TextChanged += new System.EventHandler(this.txt_pass_TextChanged);
             // 
             // btn_entrar
             // 
@@ -153,7 +150,6 @@
             this.Name = "Form1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Login";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -18,21 +18,19 @@ namespace Zoo
             InitializeComponent();
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void btn_procurar_Click(object sender, EventArgs e)
         {
             try
-            {
+            {  
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
                 conexao = new SqlConnection(strconex);
+                //inicia a conexão
                 conexao.Open();
 
                 tblalimentos = new DataTable();
 
+                //recebe os dados do banco de dados!
                 strsql = "select * from alimentos where codalimento='" + txt_cod.Text + "'";
                 adapter = new SqlDataAdapter(strsql, conexao);
                 adapter.Fill(tblalimentos);
@@ -70,6 +68,7 @@ namespace Zoo
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
+            //
             txt_cod.Text = null;
             gb_1.Enabled = true;
             gb_2.Visible = false;
@@ -78,6 +77,7 @@ namespace Zoo
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
+            //fecha a tela
             this.Close();
         }
 
@@ -85,10 +85,11 @@ namespace Zoo
         {
             try
             {
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
                 conexao = new SqlConnection(strconex);
+                //inicia a conexão
                 conexao.Open();
 
+                //altera os dados do banco de dados
                 strsql = "update alimentos set alimento='" + txt_alimento.Text + "',descricao='" + txt_desc.Text + "' where codalimento ='" + txt_cod.Text + "'";
                 comando = new SqlCommand(strsql, conexao);
                 comando.ExecuteNonQuery();

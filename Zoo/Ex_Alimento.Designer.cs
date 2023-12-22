@@ -179,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 675);
+            this.ClientSize = new System.Drawing.Size(1076, 675);
             this.Controls.Add(this.gb_2);
             this.Controls.Add(this.gb_1);
             this.Controls.Add(this.label1);
@@ -187,7 +187,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "Ex_Alimento";
             this.Text = "Excluir Alimentos";
-            this.Load += new System.EventHandler(this.Ex_Alimento_Load);
             this.gb_2.ResumeLayout(false);
             this.gb_2.PerformLayout();
             this.gb_1.ResumeLayout(false);

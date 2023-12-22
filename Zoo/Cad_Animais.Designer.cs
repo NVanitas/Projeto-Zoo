@@ -147,7 +147,6 @@
             this.cb_tipo.Name = "cb_tipo";
             this.cb_tipo.Size = new System.Drawing.Size(140, 32);
             this.cb_tipo.TabIndex = 9;
-            this.cb_tipo.SelectedIndexChanged += new System.EventHandler(this.cb_tipo_SelectedIndexChanged);
             // 
             // txt_animal
             // 

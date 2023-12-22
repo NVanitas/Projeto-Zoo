@@ -7,6 +7,7 @@ namespace Zoo
 {
     public partial class Alt_Animais : Form
     {
+        //declarar as variaveis para a conexão
         private SqlConnection conexao;
         private SqlDataAdapter adapter;
         private DataTable tblanimais;
@@ -22,12 +23,16 @@ namespace Zoo
         {
             try
             {
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
                 using (conexao = new SqlConnection(strconex))
                 {
+                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
                     tblanimais = new DataTable();
+
+                    //comando para receber os dados do sql
                     strsql = "select * from animais where codanimal=@codanimal";
                     using (adapter = new SqlDataAdapter(strsql, conexao))
                     {
@@ -80,6 +85,7 @@ namespace Zoo
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
+            //fecha a tela
             this.Close();
         }
 
@@ -87,6 +93,7 @@ namespace Zoo
         {
             try
             {
+                //altera os dados do sql
                 strsql = "update animais set animal=@animal, nome=@nome, paisorigem=@paisorigem, anonasc=@anonasc, genero=@genero, quantgramas=@quantgramas, codalimento=@codalimento where codanimal=@codanimal";
                 using (conexao = new SqlConnection(strconex))
                 using (SqlCommand comando = new SqlCommand(strsql, conexao))
@@ -124,12 +131,16 @@ namespace Zoo
         {
             try
             {
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
                 using (conexao = new SqlConnection(strconex))
                 {
+                    //Inicia a conexão
                     conexao.Open();
 
                     tblalimentos = new DataTable();
+
+                    //recebe os dados do sql
                     strsql = "select * from alimentos";
                     using (adapter = new SqlDataAdapter(strsql, conexao))
                     {
@@ -155,6 +166,7 @@ namespace Zoo
 
         private void LimparCampos()
         {
+            //limpa os cambos!
             txt_cod.Text = null;
             txt_animal.Text = null;
             txt_nome.Text = null;

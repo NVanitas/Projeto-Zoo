@@ -7,6 +7,7 @@ namespace Zoo
 {
     public partial class Form1 : Form
     {
+        //declaração de variáveis para a conexão
         private SqlConnection conexao;
         private SqlDataAdapter adapter;
         private DataTable tbllogin;
@@ -17,35 +18,17 @@ namespace Zoo
             InitializeComponent();
         }
 
-        private void Label2_Click(object sender, EventArgs e)
-        {
-            // Intentionally left empty
-        }
-
-        private void Label1_Click(object sender, EventArgs e)
-        {
-            // Intentionally left empty
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            // Intentionally left empty
-        }
-
-        private void txt_pass_TextChanged(object sender, EventArgs e)
-        {
-            // Intentionally left empty
-        }
-
         private void Btn_entrar_Click(object sender, EventArgs e)
         {
             try
             {
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=Login;Trusted_Connection=True;\r\n";
                 conexao = new SqlConnection(strconex);
 
                 using (conexao)
                 {
+                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
                     tbllogin = new DataTable();

@@ -65,7 +65,6 @@
             this.label2.Size = new System.Drawing.Size(93, 24);
             this.label2.TabIndex = 1;
             this.label2.Text = "Alimento:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label3
             // 

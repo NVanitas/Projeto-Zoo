@@ -20,6 +20,7 @@ namespace Zoo
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
+            //cancela o a ação excluir
             txt_cod.Text = null;
             gb_1.Enabled = true;
             gb_2.Visible = false;
@@ -27,22 +28,20 @@ namespace Zoo
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
+            //fecha a tela
             this.Close();
-        }
-
-        private void Ex_Alimento_Load(object sender, EventArgs e)
-        {
-           
         }
 
         private void btn_excluir_Click(object sender, EventArgs e)
         {
             try
             {
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
 
                 using (conexao = new SqlConnection(strconex))
                 {
+                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
                     strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
@@ -55,6 +54,7 @@ namespace Zoo
 
                     if (tblanimais.Rows.Count > 0)
                     {
+                        //comando para modificar os dados para nulo ,quando os animais tem seu alimento removido do sql
                         strsql = "UPDATE Animais SET codalimento = NULL WHERE codalimento = @codalimento";
                         using (comando = new SqlCommand(strsql, conexao))
                         {
@@ -62,6 +62,7 @@ namespace Zoo
                             comando.ExecuteNonQuery();
                         }
 
+                        //comando para deletar o alimento do banco de dados
                         strsql = "DELETE FROM alimentos WHERE codalimento = @codalimento";
                         using (comando = new SqlCommand(strsql, conexao))
                         {
@@ -74,13 +75,13 @@ namespace Zoo
                     }
                     else
                     {
-                        MessageBox.Show("The record was not found.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Elemento não encontrado!", "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in the entered data. " + ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro de conexão! " + ex.Message, "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -88,13 +89,16 @@ namespace Zoo
         {
             try
             {
+                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
                 strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
                 using (conexao = new SqlConnection(strconex))
                 {
+                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
                     tblalimentos = new DataTable();
 
+                    //comando para receber os dados do sql
                     strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
                     using (adapter = new SqlDataAdapter(strsql, conexao))
                     {
@@ -113,7 +117,7 @@ namespace Zoo
                     }
                     else
                     {
-                        MessageBox.Show("Record not found", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Elemento não encontrado", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                         gb_1.Enabled = true;
                         gb_2.Visible = false;
                     }
@@ -121,7 +125,7 @@ namespace Zoo
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error in the entered data. " + ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro de conexão!" + ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
     }
