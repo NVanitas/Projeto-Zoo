@@ -111,6 +111,9 @@
     <EmbeddedResource Include="Ex_Alimento.resx">
       <DependentUpon>Ex_Alimento.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Ex_Animais.resx">
+      <DependentUpon>Ex_Animais.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
