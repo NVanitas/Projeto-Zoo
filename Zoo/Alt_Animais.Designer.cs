@@ -296,7 +296,6 @@
             this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "Alt_Animais";
             this.Text = "Alterar Animais";
-            this.Load += new System.EventHandler(this.Alt_Animais_Load);
             this.gb_1.ResumeLayout(false);
             this.gb_1.PerformLayout();
             this.gb_2.ResumeLayout(false);

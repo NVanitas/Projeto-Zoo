@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
@@ -23,20 +24,18 @@ namespace Zoo
         public Cad_Animais()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexao();
         }
 
-        private void InitializeDatabaseConnection()
+        private void InicializarConexao()
         {
-            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            strconex = ConfiguracaoConexao.StrConexao;
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-
 
         private void Cad_Animais_Load(object sender, EventArgs e)
         {
@@ -46,7 +45,7 @@ namespace Zoo
                 {
                     conexao.Open();
 
-                    DataTable tblalimentos = new DataTable();
+                    tblalimentos = new DataTable();
 
                     string strsql = "SELECT * FROM alimentos";
                     using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
@@ -106,6 +105,5 @@ namespace Zoo
                                 MessageBoxIcon.Exclamation);
             }
         }
-
     }
 }

@@ -9,32 +9,38 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
     public partial class Alt_Alimento : Form
     {
-        private SqlConnection conexao;
-        private SqlDataAdapter adapter;
-        private SqlCommand comando;
-        private DataTable tblalimentos;
-        private string strsql, strconex;
+        private string strconex;
 
         public Alt_Alimento()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexao(); // Chama a função para inicializar a conexão
         }
 
-        private void InitializeDatabaseConnection()
+        // Função para inicializar a conexão
+        private void InicializarConexao()
         {
-            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            strconex = ConfiguracaoConexao.StrConexao;
         }
-
 
         private void btn_procurar_Click(object sender, EventArgs e)
         {
+            // Validar entrada do usuário antes de acessar o banco de dados
+            if (string.IsNullOrEmpty(txt_cod.Text))
+            {
+                MessageBox.Show("Por favor, forneça um código antes de pesquisar.",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             try
             {
                 using (SqlConnection conexao = new SqlConnection(strconex))
@@ -42,13 +48,15 @@ namespace Zoo
                     // Inicia a conexão
                     conexao.Open();
 
-                    tblalimentos = new DataTable();
+                    DataTable tblalimentos = new DataTable();
 
                     // Recebe os dados do banco de dados usando parâmetros
-                    strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
-                    adapter = new SqlDataAdapter(strsql, conexao);
-                    adapter.SelectCommand.Parameters.AddWithValue("@codalimento", txt_cod.Text);
-                    adapter.Fill(tblalimentos);
+                    string strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
+                    {
+                        adapter.SelectCommand.Parameters.AddWithValue("@codalimento", txt_cod.Text);
+                        adapter.Fill(tblalimentos);
+                    }
 
                     if (tblalimentos.Rows.Count == 1)
                     {
@@ -77,26 +85,33 @@ namespace Zoo
         {
             gb_1.Enabled = true;
             gb_2.Visible = false;
-
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
-            //
             txt_cod.Text = null;
             gb_1.Enabled = true;
             gb_2.Visible = false;
-
         }
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
-            //fecha a tela
+            // Fecha a tela
             this.Close();
         }
 
         private void btn_alterar_Click(object sender, EventArgs e)
         {
+            // Validar entrada do usuário antes de alterar o banco de dados
+            if (string.IsNullOrEmpty(txt_alimento.Text) || string.IsNullOrEmpty(txt_desc.Text))
+            {
+                MessageBox.Show("Por favor, preencha todos os campos antes de alterar.",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             try
             {
                 using (SqlConnection conexao = new SqlConnection(strconex))
@@ -130,12 +145,9 @@ namespace Zoo
                                 MessageBoxIcon.Exclamation);
             }
 
-
-
             txt_cod.Text = null;
             gb_1.Enabled = true;
             gb_2.Visible = false;
-
         }
     }
 }

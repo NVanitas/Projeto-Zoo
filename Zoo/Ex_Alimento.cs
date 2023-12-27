@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
@@ -17,56 +18,56 @@ namespace Zoo
         private SqlConnection conexao;
         private SqlDataAdapter adapter;
         private SqlCommand comando;
-        private DataTable tblalimentos, tblanimais;
+        private DataTable tblAlimentos, tblAnimais;
         private string strsql, strconex;
 
         public Ex_Alimento()
         {
             InitializeComponent();
+            InicializarConexao();
+        }
+
+        private void InicializarConexao()
+        {
+            strconex = ConfiguracaoConexao.StrConexao;
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
-            //cancela o a ação excluir
-            txt_cod.Text = null;
-            gb_1.Enabled = true;
-            gb_2.Visible = false;
+            // Cancela a ação de excluir
+            LimparCampos();
         }
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
-            //fecha a tela
+            // Fecha a tela
             this.Close();
         }
 
         private void Ex_Alimento_Load(object sender, EventArgs e)
         {
-            gb_2.Visible=false;
+            gb_2.Visible = false;
         }
 
         private void btn_excluir_Click(object sender, EventArgs e)
         {
             try
             {
-                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
-
                 using (conexao = new SqlConnection(strconex))
                 {
-                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
                     strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
                     using (adapter = new SqlDataAdapter(strsql, conexao))
                     {
                         adapter.SelectCommand.Parameters.AddWithValue("@codalimento", txt_cod.Text);
-                        tblanimais = new DataTable();
-                        adapter.Fill(tblanimais);
+                        tblAnimais = new DataTable();
+                        adapter.Fill(tblAnimais);
                     }
 
-                    if (tblanimais.Rows.Count > 0)
+                    if (tblAnimais.Rows.Count > 0)
                     {
-                        //comando para modificar os dados para nulo ,quando os animais tem seu alimento removido do sql
+                        // Comando para modificar os dados para nulo quando os animais têm seu alimento removido do SQL
                         strsql = "UPDATE Animais SET codalimento = NULL WHERE codalimento = @codalimento";
                         using (comando = new SqlCommand(strsql, conexao))
                         {
@@ -74,7 +75,7 @@ namespace Zoo
                             comando.ExecuteNonQuery();
                         }
 
-                        //comando para deletar o alimento do banco de dados
+                        // Comando para deletar o alimento do banco de dados
                         strsql = "DELETE FROM alimentos WHERE codalimento = @codalimento";
                         using (comando = new SqlCommand(strsql, conexao))
                         {
@@ -82,18 +83,19 @@ namespace Zoo
                             comando.ExecuteNonQuery();
                         }
 
-                        gb_1.Enabled = true;
-                        gb_2.Visible = false;
+                        MessageBox.Show("Alimento excluído com sucesso!", "Sucesso", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        LimparCampos();
                     }
                     else
                     {
-                        MessageBox.Show("Elemento não encontrado!", "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        MessageBox.Show("Elemento não encontrado!", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro de conexão! " + ex.Message, "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro de conexão! " + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -101,44 +103,50 @@ namespace Zoo
         {
             try
             {
-                //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
                 using (conexao = new SqlConnection(strconex))
                 {
-                    //inicia a conexão com o banco de dados ms sql server
                     conexao.Open();
 
-                    tblalimentos = new DataTable();
+                    tblAlimentos = new DataTable();
 
-                    //comando para receber os dados do sql
                     strsql = "SELECT * FROM alimentos WHERE codalimento = @codalimento";
                     using (adapter = new SqlDataAdapter(strsql, conexao))
                     {
                         adapter.SelectCommand.Parameters.AddWithValue("@codalimento", txt_cod.Text);
-                        adapter.Fill(tblalimentos);
+                        adapter.Fill(tblAlimentos);
                     }
 
-                    if (tblalimentos.Rows.Count == 1)
+                    if (tblAlimentos.Rows.Count == 1)
                     {
-                        txt_cod.Text = tblalimentos.Rows[0]["codalimento"].ToString();
-                        txt_alimento.Text = tblalimentos.Rows[0]["alimento"].ToString();
-                        txt_desc.Text = tblalimentos.Rows[0]["descricao"].ToString();
+                        txt_cod.Text = tblAlimentos.Rows[0]["codalimento"].ToString();
+                        txt_alimento.Text = tblAlimentos.Rows[0]["alimento"].ToString();
+                        txt_desc.Text = tblAlimentos.Rows[0]["descricao"].ToString();
 
                         gb_1.Enabled = false;
                         gb_2.Visible = true;
                     }
                     else
                     {
-                        MessageBox.Show("Elemento não encontrado", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        gb_1.Enabled = true;
-                        gb_2.Visible = false;
+                        MessageBox.Show("Elemento não encontrado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        LimparCampos();
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro de conexão!" + ex.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro de conexão!" + ex.Message, "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void LimparCampos()
+        {
+            // Limpa os campos
+            txt_cod.Text = null;
+            txt_alimento.Text = null;
+            txt_desc.Text = null;
+
+            gb_1.Enabled = true;
+            gb_2.Visible = false;
         }
     }
 }

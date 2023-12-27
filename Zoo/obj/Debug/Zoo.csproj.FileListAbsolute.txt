@@ -17,7 +17,6 @@ C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\bin\Debug\Zoo
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.csproj.AssemblyReference.cache
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Cad_Alimento.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Cad_Animais.resources
-C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Form1.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Menu.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Properties.Resources.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.csproj.GenerateResource.cache
@@ -29,3 +28,4 @@ C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Ex_Alimento.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Ex_Animais.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Con_ani_ali.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Login.resources

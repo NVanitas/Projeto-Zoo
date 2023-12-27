@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
@@ -16,43 +17,47 @@ namespace Zoo
     {
         private SqlConnection conexao;
         private SqlCommand comando;
-        private string strsql, strconex;
+        private string strconex;
 
         public Cad_Alimento()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexao();
         }
 
-        private void InitializeDatabaseConnection()
+        private void InicializarConexao()
         {
-            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022", para seu próprio servidor!
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            strconex = ConfiguracaoConexao.StrConexao;
+
+            // Inicializa a instância de conexão
+            conexao = new SqlConnection(strconex);
+
+            // Inicializa a instância de comando
+            comando = new SqlCommand();
+            comando.Connection = conexao;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                using (SqlConnection conexao = new SqlConnection(strconex))
-                {
-                    conexao.Open();
+                conexao.Open();
 
-                    string strsql = "INSERT INTO Alimentos (alimento, descricao) VALUES (@alimento, @descricao)";
+                // Define o comando SQL
+                comando.CommandText = "INSERT INTO Alimentos (alimento, descricao) VALUES (@alimento, @descricao)";
 
-                    using (SqlCommand comando = new SqlCommand(strsql, conexao))
-                    {
-                        comando.Parameters.AddWithValue("@alimento", txt_alimento.Text);
-                        comando.Parameters.AddWithValue("@descricao", txt_desc.Text);
+                // Adiciona parâmetros ao comando
+                comando.Parameters.Clear();
+                comando.Parameters.AddWithValue("@alimento", txt_alimento.Text);
+                comando.Parameters.AddWithValue("@descricao", txt_desc.Text);
 
-                        comando.ExecuteNonQuery();
-                    }
+                // Executa o comando
+                comando.ExecuteNonQuery();
 
-                    MessageBox.Show("Alimento Cadastrado!!!",
-                                    "Atenção!",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Exclamation);
-                }
+                MessageBox.Show("Alimento Cadastrado!!!",
+                                "Atenção!",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -61,13 +66,17 @@ namespace Zoo
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
             }
+            finally
+            {
+                // Fecha a conexão, independentemente de ter ocorrido uma exceção ou não
+                conexao.Close();
+            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            //fecha a tela
+            // Fecha a tela
             this.Close();
         }
-
     }
 }

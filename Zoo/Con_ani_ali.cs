@@ -9,49 +9,46 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
     public partial class Con_ani_ali : Form
     {
-        private int linhas = 0;
+        private int linhaAtual = 0;
         private SqlConnection conexao;
         private SqlDataAdapter adapter;
-        private DataTable tblalimentos, tblanimais;
-        private String strsql, strconex;
+        private DataTable tblAlimentos, tblAnimais;
+        private string strsql, strconex;
 
         public Con_ani_ali()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexao();
         }
 
-        private void InitializeDatabaseConnection()
+        private void InicializarConexao()
         {
-            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            strconex = ConfiguracaoConexao.StrConexao;
+            conexao = new SqlConnection(strconex); // Inicialize a conexão aqui
         }
-
 
         private void Con_ani_ali_Load(object sender, EventArgs e)
         {
             try
             {
-                using (SqlConnection conexao = new SqlConnection(strconex))
+                conexao.Open(); // Abra a conexão aqui
+
+                tblAlimentos = new DataTable();
+
+                string strsql = "SELECT * FROM alimentos";
+
+                using (adapter = new SqlDataAdapter(strsql, conexao))
                 {
-                    conexao.Open();
-
-                    tblalimentos = new DataTable();
-
-                    string strsql = "SELECT * FROM alimentos";
-
-                    using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
-                    {
-                        adapter.Fill(tblalimentos);
-                    }
-
-                    Preencher();
+                    adapter.Fill(tblAlimentos);
                 }
+
+                Preencher();
             }
             catch (Exception ex)
             {
@@ -60,46 +57,48 @@ namespace Zoo
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Error);
             }
+            finally
+            {
+                conexao.Close(); // Feche a conexão aqui, garantindo que ela seja fechada mesmo em caso de exceção
+            }
         }
-
 
         private void btn_one_Click(object sender, EventArgs e)
         {
-            linhas = 0;
+            linhaAtual = 0;
             Preencher();
-
         }
-
 
         private void btn_two_Click(object sender, EventArgs e)
         {
-            if (linhas > 0)
+            if (linhaAtual > 0)
             {
-
-                linhas--;
+                linhaAtual--;
                 Preencher();
             }
             else
             {
                 MessageBox.Show("Este é o primeiro registro.", "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
-
         }
-
-
 
         private void btn_three_Click(object sender, EventArgs e)
         {
-            if (linhas < tblalimentos.Rows.Count - 1)
+            if (linhaAtual < tblAlimentos.Rows.Count - 1)
             {
-                linhas++;
+                linhaAtual++;
                 Preencher();
             }
             else
             {
                 MessageBox.Show("Este é o último registro.", "Aviso!", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
 
+        private void btn_four_Click(object sender, EventArgs e)
+        {
+            linhaAtual = tblAlimentos.Rows.Count - 1;
+            Preencher();
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
@@ -107,30 +106,27 @@ namespace Zoo
             this.Close();
         }
 
-        private void btn_four_Click(object sender, EventArgs e)
-        {
-            linhas = tblalimentos.Rows.Count - 1;
-            Preencher();
-
-        }
-
         private void Preencher()
         {
+            if (linhaAtual >= 0 && linhaAtual < tblAlimentos.Rows.Count)
+            {
+                txt_cod.Text = tblAlimentos.Rows[linhaAtual]["codalimento"].ToString();
+                txt_nome.Text = tblAlimentos.Rows[linhaAtual]["alimento"].ToString();
+                txt_desc.Text = tblAlimentos.Rows[linhaAtual]["descricao"].ToString();
 
-            txt_cod.Text = tblalimentos.Rows[linhas]["codalimento"].ToString();
-            txt_nome.Text = tblalimentos.Rows[linhas]["alimento"].ToString();
-            txt_desc.Text = tblalimentos.Rows[linhas]["descricao"].ToString();
+                tblAnimais = new DataTable();
 
-            tblanimais = new DataTable();
+                strsql = "SELECT * FROM animais WHERE codalimento = @codalimento";
+                using (adapter = new SqlDataAdapter(strsql, conexao))
+                {
+                    adapter.SelectCommand.Parameters.AddWithValue("@codalimento", txt_cod.Text);
+                    adapter.Fill(tblAnimais);
+                }
 
-            strsql = "select * from animais where codalimento='" + txt_cod.Text + "'";
-            adapter = new SqlDataAdapter(strsql, conexao);
-            adapter.Fill(tblanimais);
-            grid_data.DataSource = (tblanimais);
+                grid_data.DataSource = tblAnimais;
 
-            lbl_contador.Text = linhas + 1 + " de " + tblalimentos.Rows.Count;
-
+                lbl_contador.Text = (linhaAtual + 1) + " de " + tblAlimentos.Rows.Count;
+            }
         }
-
     }
 }

@@ -9,44 +9,52 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Zoo.Menu;
 
 namespace Zoo
 {
     public partial class Alt_Animais : Form
     {
-        //declarar as variaveis para a conexão
-        private SqlConnection conexao;
-        private SqlDataAdapter adapter;
-        private DataTable tblanimais;
+        private string strconex;
         private DataTable tblalimentos;
-        private string strsql, strconex;
 
         public Alt_Animais()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexao(); // Chama a função para inicializar a conexão
+            CarregarAlimentos(); // Carrega os alimentos ao iniciar o formulário
+            HabilitarControles();
         }
 
-        private void InitializeDatabaseConnection()
+        private void InicializarConexao()
         {
-            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
+            strconex = ConfiguracaoConexao.StrConexao;
         }
 
         private void btn_procurar_Click(object sender, EventArgs e)
         {
+            // Validar entrada do usuário antes de acessar o banco de dados
+            if (string.IsNullOrEmpty(txt_cod.Text))
+            {
+                MessageBox.Show("Por favor, forneça um código antes de pesquisar.",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             try
             {
-                using (conexao = new SqlConnection(strconex))
+                using (SqlConnection conexao = new SqlConnection(strconex))
                 {
-                    //inicia a conexão com o banco de dados ms sql server
+                    // Inicia a conexão
                     conexao.Open();
 
-                    tblanimais = new DataTable();
+                    DataTable tblanimais = new DataTable();
 
-                    //comando para receber os dados do sql
-                    strsql = "select * from animais where codanimal=@codanimal";
-                    using (adapter = new SqlDataAdapter(strsql, conexao))
+                    // Comando para receber os dados do SQL
+                    string strsql = "select * from animais where codanimal=@codanimal";
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
                     {
                         adapter.SelectCommand.Parameters.AddWithValue("@codanimal", txt_cod.Text);
                         adapter.Fill(tblanimais);
@@ -56,21 +64,7 @@ namespace Zoo
                     {
                         DataRow row = tblanimais.Rows[0];
 
-                        txt_animal.Text = row["Animal"].ToString();
-                        txt_nome.Text = row["Nome"].ToString();
-                        txt_origem.Text = row["PaisOrigem"].ToString();
-                        txt_nasc.Text = row["AnoNasc"].ToString();
-                        txt_genero.Text = row["Genero"].ToString();
-                        txt_gramas.Text = row["quantgramas"].ToString();
-
-                        if (row["codalimento"] != DBNull.Value)
-                        {
-                            cb_tipo.SelectedValue = row["codalimento"];
-                        }
-                        else
-                        {
-                            cb_tipo.SelectedIndex = -1;
-                        }
+                        PreencherCampos(row);
 
                         gb_1.Enabled = false;
                         gb_2.Visible = true;
@@ -78,15 +72,32 @@ namespace Zoo
                     else
                     {
                         MessageBox.Show("Registro não foi encontrado", "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        txt_cod.Text = null;
-                        gb_1.Enabled = true;
-                        gb_2.Visible = false;
+                        LimparCampos();
                     }
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro na pesquisa." + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro na pesquisa. " + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+        }
+
+        private void PreencherCampos(DataRow row)
+        {
+            txt_animal.Text = row["Animal"].ToString();
+            txt_nome.Text = row["Nome"].ToString();
+            txt_origem.Text = row["PaisOrigem"].ToString();
+            txt_nasc.Text = row["AnoNasc"].ToString();
+            txt_genero.Text = row["Genero"].ToString();
+            txt_gramas.Text = row["quantgramas"].ToString();
+
+            if (row["codalimento"] != DBNull.Value)
+            {
+                cb_tipo.SelectedValue = row["codalimento"];
+            }
+            else
+            {
+                cb_tipo.SelectedIndex = -1;
             }
         }
 
@@ -97,17 +108,27 @@ namespace Zoo
 
         private void btn_retornar_Click(object sender, EventArgs e)
         {
-            //fecha a tela
+            // Fecha a tela
             this.Close();
         }
 
         private void btn_alterar_Click(object sender, EventArgs e)
         {
+            // Validar entrada do usuário antes de alterar o banco de dados
+            if (string.IsNullOrEmpty(txt_animal.Text) || string.IsNullOrEmpty(txt_nome.Text))
+            {
+                MessageBox.Show("Por favor, preencha os campos obrigatórios antes de alterar.",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
+                return;
+            }
+
             try
             {
-                //altera os dados do sql
-                strsql = "update animais set animal=@animal, nome=@nome, paisorigem=@paisorigem, anonasc=@anonasc, genero=@genero, quantgramas=@quantgramas, codalimento=@codalimento where codanimal=@codanimal";
-                using (conexao = new SqlConnection(strconex))
+                // Altera os dados no SQL
+                string strsql = "update animais set animal=@animal, nome=@nome, paisorigem=@paisorigem, anonasc=@anonasc, genero=@genero, quantgramas=@quantgramas, codalimento=@codalimento where codanimal=@codanimal";
+                using (SqlConnection conexao = new SqlConnection(strconex))
                 using (SqlCommand comando = new SqlCommand(strsql, conexao))
                 {
                     conexao.Open();
@@ -122,10 +143,18 @@ namespace Zoo
 
                     comando.ExecuteNonQuery();
                 }
+
+                MessageBox.Show("Dados alterados com sucesso!",
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Erro nos dados digitados." + ex.Message, "Aviso", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBox.Show("Erro nos dados digitados. " + ex.Message,
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             }
             finally
             {
@@ -133,26 +162,20 @@ namespace Zoo
             }
         }
 
-        private void Alt_Animais_Load(object sender, EventArgs e)
-        {
-            CarregarAlimentos();
-            HabilitarControles();
-        }
-
         private void CarregarAlimentos()
         {
             try
             {
-                using (conexao = new SqlConnection(strconex))
+                using (SqlConnection conexao = new SqlConnection(strconex))
                 {
-                    //Inicia a conexão
+                    // Inicia a conexão
                     conexao.Open();
 
                     tblalimentos = new DataTable();
 
-                    //recebe os dados do sql
-                    strsql = "select * from alimentos";
-                    using (adapter = new SqlDataAdapter(strsql, conexao))
+                    // Recebe os dados do SQL
+                    string strsql = "select * from alimentos";
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
                     {
                         adapter.Fill(tblalimentos);
                     }
@@ -176,7 +199,7 @@ namespace Zoo
 
         private void LimparCampos()
         {
-            //limpa os cambos!
+            // Limpa os campos
             txt_cod.Text = null;
             txt_animal.Text = null;
             txt_nome.Text = null;
