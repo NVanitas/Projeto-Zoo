@@ -1,6 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -30,6 +37,11 @@ namespace Zoo
         {
             //fecha a tela
             this.Close();
+        }
+
+        private void Ex_Alimento_Load(object sender, EventArgs e)
+        {
+            gb_2.Visible=false;
         }
 
         private void btn_excluir_Click(object sender, EventArgs e)

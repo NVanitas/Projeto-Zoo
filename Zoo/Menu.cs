@@ -64,5 +64,11 @@ namespace Zoo
             ex_alimento.Show();
            
         }
+
+        private void porAlimentoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Con_ani_ali con_ani_ali = new Con_ani_ali();
+            con_ani_ali.Show();
+        }
     }
 }

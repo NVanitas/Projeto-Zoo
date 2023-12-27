@@ -38,6 +38,9 @@
             this.excluirToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.animaisToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.alimentosToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.consultarToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.alimentosToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.porAlimentoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -47,10 +50,11 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.cadastrarToolStripMenuItem,
             this.alterarToolStripMenuItem,
-            this.excluirToolStripMenuItem});
+            this.excluirToolStripMenuItem,
+            this.consultarToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(800, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(800, 30);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -112,16 +116,39 @@
             // animaisToolStripMenuItem2
             // 
             this.animaisToolStripMenuItem2.Name = "animaisToolStripMenuItem2";
-            this.animaisToolStripMenuItem2.Size = new System.Drawing.Size(224, 26);
+            this.animaisToolStripMenuItem2.Size = new System.Drawing.Size(159, 26);
             this.animaisToolStripMenuItem2.Text = "Animais ";
             this.animaisToolStripMenuItem2.Click += new System.EventHandler(this.animaisToolStripMenuItem2_Click);
             // 
             // alimentosToolStripMenuItem2
             // 
             this.alimentosToolStripMenuItem2.Name = "alimentosToolStripMenuItem2";
-            this.alimentosToolStripMenuItem2.Size = new System.Drawing.Size(224, 26);
+            this.alimentosToolStripMenuItem2.Size = new System.Drawing.Size(159, 26);
             this.alimentosToolStripMenuItem2.Text = "Alimentos";
             this.alimentosToolStripMenuItem2.Click += new System.EventHandler(this.alimentosToolStripMenuItem2_Click);
+            // 
+            // consultarToolStripMenuItem
+            // 
+            this.consultarToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.alimentosToolStripMenuItem3});
+            this.consultarToolStripMenuItem.Name = "consultarToolStripMenuItem";
+            this.consultarToolStripMenuItem.Size = new System.Drawing.Size(85, 26);
+            this.consultarToolStripMenuItem.Text = "Consultar";
+            // 
+            // alimentosToolStripMenuItem3
+            // 
+            this.alimentosToolStripMenuItem3.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.porAlimentoToolStripMenuItem});
+            this.alimentosToolStripMenuItem3.Name = "alimentosToolStripMenuItem3";
+            this.alimentosToolStripMenuItem3.Size = new System.Drawing.Size(224, 26);
+            this.alimentosToolStripMenuItem3.Text = "Animais";
+            // 
+            // porAlimentoToolStripMenuItem
+            // 
+            this.porAlimentoToolStripMenuItem.Name = "porAlimentoToolStripMenuItem";
+            this.porAlimentoToolStripMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.porAlimentoToolStripMenuItem.Text = "Por Alimento";
+            this.porAlimentoToolStripMenuItem.Click += new System.EventHandler(this.porAlimentoToolStripMenuItem_Click);
             // 
             // Menu
             // 
@@ -152,5 +179,8 @@
         private System.Windows.Forms.ToolStripMenuItem excluirToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem animaisToolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem alimentosToolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem consultarToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem alimentosToolStripMenuItem3;
+        private System.Windows.Forms.ToolStripMenuItem porAlimentoToolStripMenuItem;
     }
 }

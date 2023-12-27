@@ -1,5 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -20,39 +28,38 @@ namespace Zoo
         {
             //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022", para seu próprio servidor!
             strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-            conexao = new SqlConnection(strconex);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
             try
             {
-                //inicia a conexão com o banco de dados ms sql server
-                conexao.Open();
+                using (SqlConnection conexao = new SqlConnection(strconex))
+                {
+                    conexao.Open();
 
-                //o comando de inserir dados que será executado no sql
-                strsql = "insert into Alimentos (alimento,descricao) values (@alimento, @descricao)";
-                comando = new SqlCommand(strsql, conexao);
-                comando.Parameters.AddWithValue("@alimento", txt_alimento.Text);
-                comando.Parameters.AddWithValue("@descricao", txt_desc.Text);
-                comando.ExecuteNonQuery();
+                    string strsql = "INSERT INTO Alimentos (alimento, descricao) VALUES (@alimento, @descricao)";
 
-                MessageBox.Show("Alimento Cadastrado!!! ",
+                    using (SqlCommand comando = new SqlCommand(strsql, conexao))
+                    {
+                        comando.Parameters.AddWithValue("@alimento", txt_alimento.Text);
+                        comando.Parameters.AddWithValue("@descricao", txt_desc.Text);
+
+                        comando.ExecuteNonQuery();
+                    }
+
+                    MessageBox.Show("Alimento Cadastrado!!!",
                                     "Atenção!",
                                     MessageBoxButtons.OK,
                                     MessageBoxIcon.Exclamation);
+                }
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Erro nos dados digitados. " + ex.Message,
-                                    "Aviso",
-                                    MessageBoxButtons.OK,
-                                    MessageBoxIcon.Exclamation);
-            }
-            finally
-            {
-                //finaliza a conexão
-                conexao.Close();
+                                "Aviso",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Exclamation);
             }
         }
 
@@ -61,6 +68,6 @@ namespace Zoo
             //fecha a tela
             this.Close();
         }
-        
+
     }
 }

@@ -28,3 +28,4 @@ C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Alt_Animais.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Ex_Alimento.resources
 C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Ex_Animais.resources
+C:\Users\NICOL\OneDrive\Área de Trabalho\Proj-Zoo\Projeto-Zoo\Zoo\obj\Debug\Zoo.Con_ani_ali.resources

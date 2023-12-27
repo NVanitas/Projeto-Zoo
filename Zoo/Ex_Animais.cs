@@ -1,6 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -18,6 +25,13 @@ namespace Zoo
         public Ex_Animais()
         {
             InitializeComponent();
+            InitializeDatabaseConnection();
+        }
+
+        private void InitializeDatabaseConnection()
+        {
+            //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
+            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
         }
 
         private void btn_retornar_Click(object sender, EventArgs e)
@@ -41,8 +55,6 @@ namespace Zoo
         {
             try
             {
-                // Conexão ao servidor, substitua "NicolasPc\\SQLSERVER2022" pelo seu próprio servidor
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
                 using (conexao = new SqlConnection(strconex))
                 {
                     // Inicia a conexão com o banco de dados MS SQL Server
@@ -100,8 +112,6 @@ namespace Zoo
         {
             try
             {
-                // Conexão ao servidor, substitua "NicolasPc\\SQLSERVER2022" pelo seu próprio servidor
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
                 using (conexao = new SqlConnection(strconex))
                 {
                     // Inicia a conexão
@@ -137,8 +147,6 @@ namespace Zoo
         {
             try
             {
-                // Conexão ao servidor, substitua "NicolasPc\\SQLSERVER2022" pelo seu próprio servidor
-                strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
 
                 using (conexao = new SqlConnection(strconex))
                 {

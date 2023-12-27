@@ -70,6 +70,12 @@
     <Compile Include="Cad_Animais.Designer.cs">
       <DependentUpon>Cad_Animais.cs</DependentUpon>
     </Compile>
+    <Compile Include="Con_ani_ali.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Con_ani_ali.Designer.cs">
+      <DependentUpon>Con_ani_ali.cs</DependentUpon>
+    </Compile>
     <Compile Include="Ex_Alimento.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -82,11 +88,11 @@
     <Compile Include="Ex_Animais.Designer.cs">
       <DependentUpon>Ex_Animais.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="Login.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Login.Designer.cs">
+      <DependentUpon>Login.cs</DependentUpon>
     </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
@@ -108,14 +114,17 @@
     <EmbeddedResource Include="Cad_Animais.resx">
       <DependentUpon>Cad_Animais.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Con_ani_ali.resx">
+      <DependentUpon>Con_ani_ali.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ex_Alimento.resx">
       <DependentUpon>Ex_Alimento.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Ex_Animais.resx">
       <DependentUpon>Ex_Animais.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Login.resx">
+      <DependentUpon>Login.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>

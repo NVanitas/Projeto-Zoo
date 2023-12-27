@@ -1,6 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Zoo
@@ -23,32 +30,34 @@ namespace Zoo
         {
             //conexão ao servidor!, substitua "NicolasPc\\SQLSERVER2022, para seu próprio servidor!
             strconex = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;\r\n";
-            conexao = new SqlConnection(strconex);
         }
 
         private void btn_cancelar_Click(object sender, EventArgs e)
         {
             this.Close();
         }
-   
-     
+
+
         private void Cad_Animais_Load(object sender, EventArgs e)
         {
             try
             {
-                //inicia a conexão com o banco de dados ms sql server
-                conexao.Open();
+                using (SqlConnection conexao = new SqlConnection(strconex))
+                {
+                    conexao.Open();
 
-                tblalimentos = new DataTable();
+                    DataTable tblalimentos = new DataTable();
 
-                //comando para receber os dados de alimentos no sql
-                strsql = "select * from alimentos";
-                adapter = new SqlDataAdapter(strsql, conexao);
-                adapter.Fill(tblalimentos);
+                    string strsql = "SELECT * FROM alimentos";
+                    using (SqlDataAdapter adapter = new SqlDataAdapter(strsql, conexao))
+                    {
+                        adapter.Fill(tblalimentos);
+                    }
 
-                cb_tipo.DataSource = tblalimentos;
-                cb_tipo.DisplayMember = "Alimento";
-                cb_tipo.ValueMember = "codalimento";
+                    cb_tipo.DataSource = tblalimentos;
+                    cb_tipo.DisplayMember = "Alimento";
+                    cb_tipo.ValueMember = "codalimento";
+                }
             }
             catch (Exception ex)
             {
@@ -57,40 +66,37 @@ namespace Zoo
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
             }
-            finally
-            {
-                //finaliza a conexão
-                conexao.Close();
-            }
         }
 
         private void btn_cadastrar_Click(object sender, EventArgs e)
         {
             try
             {
-                //inicia a conexão com o banco de dados ms sql server
+                using (SqlConnection conexao = new SqlConnection(strconex))
+                {
+                    conexao.Open();
 
-                conexao.Open();
+                    string strsql = "INSERT INTO Animais (Animal, Nome, PaisOrigem, AnoNasc, Genero, QuantGramas, CodAlimento) " +
+                                    "VALUES (@Animal, @Nome, @PaisOrigem, @AnoNasc, @Genero, @QuantGramas, @CodAlimento)";
 
-                //o comando de inserir dados que será executado no sql
-                strsql = "insert into Animais (Animal,Nome,PaisOrigem,AnoNasc,Genero,QuantGramas,CodAlimento) " +
-                         "values (@Animal, @Nome, @PaisOrigem, @AnoNasc, @Genero, @QuantGramas, @CodAlimento)";
+                    using (SqlCommand comando = new SqlCommand(strsql, conexao))
+                    {
+                        comando.Parameters.AddWithValue("@Animal", txt_animal.Text);
+                        comando.Parameters.AddWithValue("@Nome", txt_nome.Text);
+                        comando.Parameters.AddWithValue("@PaisOrigem", txt_origem.Text);
+                        comando.Parameters.AddWithValue("@AnoNasc", txt_nasc.Text);
+                        comando.Parameters.AddWithValue("@Genero", txt_genero.Text);
+                        comando.Parameters.AddWithValue("@QuantGramas", txt_gramas.Text);
+                        comando.Parameters.AddWithValue("@CodAlimento", cb_tipo.SelectedValue);
 
-                comando = new SqlCommand(strsql, conexao);
-                comando.Parameters.AddWithValue("@Animal", txt_animal.Text);
-                comando.Parameters.AddWithValue("@Nome", txt_nome.Text);
-                comando.Parameters.AddWithValue("@PaisOrigem", txt_origem.Text);
-                comando.Parameters.AddWithValue("@AnoNasc", txt_nasc.Text);
-                comando.Parameters.AddWithValue("@Genero", txt_genero.Text);
-                comando.Parameters.AddWithValue("@QuantGramas", txt_gramas.Text);
-                comando.Parameters.AddWithValue("@CodAlimento", cb_tipo.SelectedValue);
+                        comando.ExecuteNonQuery();
+                    }
 
-                comando.ExecuteNonQuery();
-
-                MessageBox.Show("Animal Cadastrado!!! ",
-                                "Atenção!",
-                                MessageBoxButtons.OK,
-                                MessageBoxIcon.Exclamation);
+                    MessageBox.Show("Animal Cadastrado!!! ",
+                                    "Atenção!",
+                                    MessageBoxButtons.OK,
+                                    MessageBoxIcon.Exclamation);
+                }
             }
             catch (Exception ex)
             {
@@ -99,11 +105,7 @@ namespace Zoo
                                 MessageBoxButtons.OK,
                                 MessageBoxIcon.Exclamation);
             }
-            finally
-            {
-                //finaliza a conexão
-                conexao.Close();
-            }
         }
+
     }
 }
