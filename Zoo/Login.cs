@@ -20,12 +20,12 @@ namespace Zoo
         public Login()
         {
             InitializeComponent();
-            InitializeDatabaseConnection();
+            InicializarConexaoLogin();
         }
-
-        private void InitializeDatabaseConnection()
+        private void InicializarConexaoLogin()
         {
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=Login;Integrated Security = SSPI;TrustServerCertificate=True;\r\n";
+            //Altere NicolasPc\\SQLSERVER2022 para o seu próprio server de banco de dados!
+            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=Login;Integrated Security = SSPI;TrustServerCertificate=True;";
         }
 
         private void Btn_entrar_Click(object sender, EventArgs e)
