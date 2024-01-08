@@ -25,7 +25,7 @@ namespace Zoo
 
         private void InitializeDatabaseConnection()
         {
-            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=Login;Trusted_Connection=True;\r\n";
+            strconex = "Server=NicolasPc\\SQLSERVER2022;Database=Login;Integrated Security = SSPI;TrustServerCertificate=True;\r\n";
         }
 
         private void Btn_entrar_Click(object sender, EventArgs e)

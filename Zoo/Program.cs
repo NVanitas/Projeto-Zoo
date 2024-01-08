@@ -23,6 +23,6 @@ namespace Zoo
     public static class ConfiguracaoConexao
     {
         //altere a string de conexão,mude : "Nicolas\\SQLSERVER2022" para o seu próprio banco de dados!
-        public static string StrConexao { get; } = "Server=NicolasPc\\SQLSERVER2022;Database=zoologico;Trusted_Connection=True;";
+        public static string StrConexao { get; } = "Server=NicolasPc\\SQLSERVER2022;Database=Zoologico;Integrated Security = SSPI;TrustServerCertificate=True;";
     }
 }
